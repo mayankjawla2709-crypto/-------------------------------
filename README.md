@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Cutie Pie</title>
+    <title>Happy Birthday </title>
     <style>
         body {
             margin: 0;
@@ -104,7 +104,7 @@
 <body>
     <button id="startBtn">🎁 Press Me 🎁</button>
     <h1 id="mainTitle">HAPPY BIRTHDAY</h1>
-    <h2 id="subTitle">Cutie Pie 💐</h2>
+    <h2 id="subTitle"> 💐</h2>
     <p id="paragraph"></p>
     <canvas id="fireworks"></canvas>
 
@@ -119,7 +119,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const paraText = "Happy Bday, maharani😁! Ur smile outshines stars, ur heart's pure magic. Not just older, but more amazing & beautiful! Here's to a day as radiant as u, full of love & joy, my sweet Bhalu🧸..!";
+        const paraText = "Happy Bday,🙂! Ur smile outshines stars🌟, ur heart's pure magic💘. Not just older, but more amazing & beautiful🧿! Here's to a day as radiant as u, full of love❤️ & joy😼, my sweet Bhalu🧸..!";
 
         function typeWriter(text, element, speed) {
             let i = 0;
