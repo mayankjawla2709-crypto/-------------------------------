@@ -2,28 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Cutie Pie</title>
 <style>
   body {
     margin: 0;
     padding: 0;
-    background: #000; /* static before click */
+    background: url('https://i.ibb.co/dkD0rWj/cartoon-birthday-bg.jpg') no-repeat center center/cover;
     overflow: hidden;
     font-family: 'Comic Sans MS', cursive, sans-serif;
     text-align: center;
     height: 100vh;
     position: relative;
-    transition: background 1s ease;
-  }
-  body.active-bg {
-    animation: gradientMove 10s ease infinite;
-    background-size: 400% 400%;
-  }
-  @keyframes gradientMove {
-    0% { background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027); }
-    50% { background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #1a2a6c); }
-    100% { background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027); }
   }
 
   #startBtn {
@@ -38,12 +27,10 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     transition: transform 0.2s;
     z-index: 10;
-    position: relative;
   }
-  #startBtn:hover {
-    transform: scale(1.1);
-  }
-  h1 {
+  #startBtn:hover { transform: scale(1.1); }
+
+  #message {
     font-size: 3rem;
     color: white;
     text-shadow: 0 0 10px pink, 0 0 20px purple;
@@ -52,11 +39,14 @@
     animation: glow 1.5s infinite alternate;
     z-index: 5;
     position: relative;
+    opacity: 0;
   }
   @keyframes glow {
     from { text-shadow: 0 0 10px pink, 0 0 20px purple; }
-    to { text-shadow: 0 0 20px pink, 0 0 30px purple; }
+    to   { text-shadow: 0 0 20px pink, 0 0 30px purple; }
   }
+  @keyframes fadeIn { to { opacity: 1; } }
+
   #paragraph {
     display: none;
     color: white;
@@ -68,13 +58,14 @@
     z-index: 5;
     position: relative;
   }
+
   .balloon {
     position: absolute;
     bottom: -150px;
     border-radius: 50%;
     width: 50px;
     height: 60px;
-    animation: floatUp 8s linear infinite;
+    animation: floatUp 8s linear forwards, sway 2s ease-in-out infinite alternate;
   }
   .gift {
     position: absolute;
@@ -86,9 +77,14 @@
     border-radius: 5px;
   }
   @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    0%   { transform: translateY(0) rotate(0); opacity: 1; }
     100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
   }
+  @keyframes sway {
+    from { transform: translateX(-10px); }
+    to   { transform: translateX(10px); }
+  }
+
   canvas {
     position: absolute;
     top: 0;
@@ -101,28 +97,25 @@
 
 <button id="startBtn">🎁 Press Me 🎁</button>
 <h1 id="message">Happy Birthday Cutie Pie 💐</h1>
-<div id="paragraph"></div>
-<audio id="music" src="YOUR-MP3-LINK-HERE.mp3"></audio>
+<p id="paragraph"></p>
+<audio id="music" src="YOUR-MP3-LINK-HERE" preload="auto"></audio>
 <canvas id="fireworks"></canvas>
 
 <script>
-// Elements
 const startBtn = document.getElementById('startBtn');
 const message = document.getElementById('message');
 const paragraph = document.getElementById('paragraph');
 const music = document.getElementById('music');
 const canvas = document.getElementById('fireworks');
 const ctx = canvas.getContext('2d');
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Paragraph text
 const paraText = "Happy Bday, maharani😁! Ur smile outshines stars, ur heart's pure magic. Not just older, but more amazing & beautiful! Here's to a day as radiant as u, full of love & joy, my sweet Bhalu🧸..!";
 
-// Typewriter effect
 function typeWriter(text, element, speed) {
   let i = 0;
+  element.innerHTML = '';
   element.style.display = 'block';
   function typing() {
     if (i < text.length) {
@@ -134,7 +127,6 @@ function typeWriter(text, element, speed) {
   typing();
 }
 
-// Balloon + gift animation
 function createGiftBalloon() {
   const balloon = document.createElement('div');
   balloon.classList.add('balloon');
@@ -149,76 +141,83 @@ function createGiftBalloon() {
   document.body.appendChild(balloon);
   document.body.appendChild(gift);
 
+  const explodeTime = 3000 + Math.random() * 3000;
   setTimeout(() => {
-    explode(parseInt(balloon.style.left), Math.random() * window.innerHeight * 0.8);
+    explode(parseFloat(balloon.style.left) * window.innerWidth / 100, Math.random() * window.innerHeight * 0.8);
     balloon.remove();
     gift.remove();
-  }, 3000 + Math.random() * 3000);
+  }, explodeTime);
 }
 
-// Firework particles
 let particles = [];
+
 function explode(x, y) {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 20; i++) {
     particles.push({
       x: x,
       y: y,
       radius: Math.random() * 3 + 2,
-      color: `hsl(${Math.random() * 360}, 70%, 60%)`,
-      velocity: {
-        x: (Math.random() - 0.5) * 5,
-        y: (Math.random() - 0.5) * 5
-      },
-      alpha: 1
+      color: `hsl(${Math.random() * 50 + 330}, 70%, 60%)`,
+      velocity: { x: (Math.random() - 0.5) * 5, y: (Math.random() - 0.5) * 5 },
+      alpha: 1,
+      shape: 'circle'
+    });
+  }
+  // Hearts
+  for (let i = 0; i < 10; i++) {
+    particles.push({
+      x: x,
+      y: y,
+      radius: Math.random() * 2 + 1,
+      color: `hsl(${Math.random() * 50 + 330}, 70%, 60%)`,
+      velocity: { x: (Math.random() - 0.5) * 3, y: (Math.random() - 0.5) * 3 },
+      alpha: 1,
+      shape: 'heart'
     });
   }
 }
 
-// Draw heart shape
-function drawHeart(ctx, x, y, size, color, alpha) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(size / 50, size / 50);
+function drawHeart(ctx, x, y, size) {
   ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.bezierCurveTo(0, -30, -25, -30, -25, 0);
-  ctx.bezierCurveTo(-25, 20, 0, 30, 0, 50);
-  ctx.bezierCurveTo(0, 30, 25, 20, 25, 0);
-  ctx.bezierCurveTo(25, -30, 0, -30, 0, 0);
-  ctx.fillStyle = color;
-  ctx.globalAlpha = alpha;
+  ctx.moveTo(x, y);
+  ctx.bezierCurveTo(x, y - size/2, x - size, y - size/2, x - size, y);
+  ctx.bezierCurveTo(x - size, y + size/2, x, y + size, x, y + size*1.5);
+  ctx.bezierCurveTo(x, y + size, x + size, y + size/2, x + size, y);
+  ctx.bezierCurveTo(x + size, y - size/2, x, y - size/2, x, y);
   ctx.fill();
-  ctx.restore();
 }
 
-// Animate fireworks
 function animateFireworks() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach((p, i) => {
     p.x += p.velocity.x;
     p.y += p.velocity.y;
     p.alpha -= 0.02;
-    drawHeart(ctx, p.x, p.y, p.radius * 5, p.color, p.alpha);
-    if (p.alpha <= 0) {
-      particles.splice(i, 1);
+    ctx.globalAlpha = p.alpha;
+    ctx.fillStyle = p.color;
+    if (p.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
+      ctx.fill();
+    } else if (p.shape === 'heart') {
+      drawHeart(ctx, p.x, p.y, p.radius * 2);
     }
+    if (p.alpha <= 0) particles.splice(i, 1);
   });
   requestAnimationFrame(animateFireworks);
 }
 animateFireworks();
 
-// Start event
 startBtn.addEventListener('click', () => {
-  document.body.classList.add('active-bg'); // start background animation
   startBtn.style.display = 'none';
   message.style.display = 'block';
-  music.play();
+  message.style.animation = "fadeIn 2s forwards, glow 1.5s infinite alternate";
+  if (music.src) music.play();
   setTimeout(() => {
     typeWriter(paraText, paragraph, 40);
   }, 2000);
   setInterval(createGiftBalloon, 800);
 });
 </script>
-
 </body>
 </html>
