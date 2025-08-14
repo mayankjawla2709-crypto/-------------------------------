@@ -104,7 +104,7 @@
 <body>
     <button id="startBtn">🎁 Press Me 🎁</button>
     <h1 id="mainTitle">  HAPPY BIRTHDAY</h1>
-    <h2 id="subTitle">      💐</h2>
+    <h2 id="subTitle">       💐</h2>
     <p id="paragraph"></p>
     <canvas id="fireworks"></canvas>
 
@@ -119,7 +119,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const paraText = "Happy Birthday,🙂! Ur smile outshines stars🌟, ur heart's pure magic💘. Not just older, but more amazing & beautiful🧿! Here's to a day as radiant as u, full of love❤️ & joy😼, my sweet Bhalu🧸..!";
+        const paraText = "i wish you Happy Birthday "mon amour",🙂! Ur smile outshines stars🌟, ur heart's pure magic💘. Not just older, but more amazing & beautiful🧿! Here's to a day as radiant as u, full of love❤️ & joy😼, my sweet Bhalu🧸..!";
 
         function typeWriter(text, element, speed) {
             let i = 0;
