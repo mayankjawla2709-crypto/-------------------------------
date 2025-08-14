@@ -119,7 +119,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const paraText = "Happy Bday,🙂! Ur smile outshines stars🌟, ur heart's pure magic💘. Not just older, but more amazing & beautiful🧿! Here's to a day as radiant as u, full of love❤️ & joy😼, my sweet Bhalu🧸..!";
+        const paraText = "Happy Birthday,🙂! Ur smile outshines stars🌟, ur heart's pure magic💘. Not just older, but more amazing & beautiful🧿! Here's to a day as radiant as u, full of love❤️ & joy😼, my sweet Bhalu🧸..!";
 
         function typeWriter(text, element, speed) {
             let i = 0;
