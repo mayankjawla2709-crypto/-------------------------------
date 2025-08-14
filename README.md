@@ -103,8 +103,8 @@
 </head>
 <body>
     <button id="startBtn">🎁 Press Me 🎁</button>
-    <h1 id="mainTitle">HAPPY BIRTHDAY</h1>
-    <h2 id="subTitle"> 💐</h2>
+    <h1 id="mainTitle">---HAPPY BIRTHDAY---</h1>
+    <h2 id="subTitle"> -----💐-----</h2>
     <p id="paragraph"></p>
     <canvas id="fireworks"></canvas>
 
